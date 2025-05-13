@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>500 Internal Server Error</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .error-container {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .error-header {
+      background-color: #f39c12;
+      color: white;
+      padding: 30px 20px;
+    }
+
+    .error-code {
+      font-size: 64px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .error-title {
+      font-size: 24px;
+      font-weight: 500;
+    }
+
+    .error-body {
+      padding: 30px;
+    }
+
+    .error-message {
+      color: #555;
+      font-size: 16px;
+      line-height: 1.5;
+      margin-bottom: 30px;
+    }
+
+    .error-icon {
+      font-size: 80px;
+      margin-bottom: 20px;
+      color: #f39c12;
+    }
+
+    .back-button {
+      background-color: #4a6cf7;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 12px 25px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      display: inline-block;
+      text-decoration: none;
+      margin-right: 10px;
+    }
+
+    .back-button:hover {
+      background-color: #3a5ce5;
+    }
+
+    .refresh-button {
+      background-color: #2ecc71;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 12px 25px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      display: inline-block;
+      text-decoration: none;
+    }
+
+    .refresh-button:hover {
+      background-color: #27ae60;
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    @media (max-width: 600px) {
+      .error-container {
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .error-code {
+        font-size: 48px;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+      }
+
+      .back-button, .refresh-button {
+        width: 100%;
+        margin-right: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="error-container">
+  <div class="error-header">
+    <div class="error-code">500</div>
+    <div class="error-title">Internal Server Error</div>
+  </div>
+  <div class="error-body">
+    <div class="error-icon">
+      <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+        <line x1="12" y1="9" x2="12" y2="13"></line>
+        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+      </svg>
+    </div>
+    <div class="error-message">
+      <p>Oops! Something went wrong on our server.</p>
+      <p>We're working to fix the problem. Please try again later or contact our support team if the issue persists.</p>
+    </div>
+    <div class="action-buttons">
+      <a href="/" class="back-button">Back to Home</a>
+      <a href="javascript:location.reload();" class="refresh-button">Try Again</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Generate a unique error reference ID
+  document.addEventListener('DOMContentLoaded', function() {
+    const now = new Date();
+    const timestamp = now.getFullYear().toString().substr(-2) +
+            ('0' + (now.getMonth() + 1)).slice(-2) +
+            ('0' + now.getDate()).slice(-2) + '_' +
+            ('0' + now.getHours()).slice(-2) +
+            ('0' + now.getMinutes()).slice(-2);
+    const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+    document.getElementById('errorId').textContent = 'ERR_' + timestamp + '_' + random;
+  });
+</script>
+</body>
+</html>
