@@ -1,5 +1,5 @@
 @import java.util.List
-@import ua.edu.chnu.kkn.blog_platform.data.BlogPost
+@import ua.edu.chnu.kkn.blog_platform.data.post.BlogPost
 
 @param List<BlogPost> blogPosts
 @param Boolean isAuthenticated

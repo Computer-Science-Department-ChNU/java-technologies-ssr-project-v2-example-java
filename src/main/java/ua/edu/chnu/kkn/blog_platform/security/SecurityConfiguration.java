@@ -2,28 +2,33 @@ package ua.edu.chnu.kkn.blog_platform.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import ua.edu.chnu.kkn.blog_platform.data.user.BlogPlatformUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
+
+    private final BlogPlatformUserDetailsService blogPlatformUserDetailsService;
+
+    public SecurityConfiguration(BlogPlatformUserDetailsService blogPlatformUserDetailsService) {
+        this.blogPlatformUserDetailsService = blogPlatformUserDetailsService;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry -> {
-                    registry.requestMatchers("/", "/register/**").permitAll();
+                    registry.requestMatchers("/", "/signup/**").permitAll();
                     registry.requestMatchers("/admin/**").hasRole(Role.ADMIN.name());
                     registry.requestMatchers("/author/**").hasRole(Role.AUTHOR.name());
                     registry.anyRequest().authenticated();
@@ -39,17 +44,15 @@ public class SecurityConfiguration {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        UserDetails normalUser = User.builder()
-                .username("author")
-                .password("$2a$12$pLlEDlW7J3LJMLMl0Uv8Xu.NO1TYDvrMmIpoDhpHZ3So65XlsR.Vy")
-                .roles(Role.AUTHOR.name())
-                .build();
-        UserDetails adminUser = User.builder()
-                .username("admin")
-                .password("$2a$12$4MVGfzHJ2C370at3MTGHdeX6z/kon2X5KbVWZTGfqjWBhj.KnQBuC")
-                .roles(Role.ADMIN.name(), Role.AUTHOR.name())
-                .build();
-        return new InMemoryUserDetailsManager(normalUser, adminUser);
+        return blogPlatformUserDetailsService;
+    }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setUserDetailsService(blogPlatformUserDetailsService);
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        return daoAuthenticationProvider;
     }
 
     @Bean

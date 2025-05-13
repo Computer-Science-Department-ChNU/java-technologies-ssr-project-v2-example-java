@@ -1,4 +1,4 @@
-package ua.edu.chnu.kkn.blog_platform.data;
+package ua.edu.chnu.kkn.blog_platform.data.post;
 
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public class BlogPost {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String title;

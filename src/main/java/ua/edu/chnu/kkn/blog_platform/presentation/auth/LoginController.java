@@ -1,4 +1,4 @@
-package ua.edu.chnu.kkn.blog_platform.presentation;
+package ua.edu.chnu.kkn.blog_platform.presentation.auth;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,10 +1,7 @@
-package ua.edu.chnu.kkn.blog_platform.data;
+package ua.edu.chnu.kkn.blog_platform.data.post;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Entity
 @Table(name = "author")
@@ -15,7 +12,7 @@ import lombok.ToString;
 public class Author {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
