@@ -18,6 +18,11 @@ public class SignUpRestController {
 
     @PostMapping("/signup")
     public BlogPlatformUser signUpNewUser(@RequestBody BlogPlatformUserRequest user) {
-        return blogPlatformUserService.signUp(user);
+        return blogPlatformUserService.signUpAuthor(user);
+    }
+
+    @PostMapping("/signup/admin")
+    public BlogPlatformUser signUpNewAdmin(@RequestBody BlogPlatformUserRequest user) {
+        return blogPlatformUserService.signUpAdmin(user);
     }
 }

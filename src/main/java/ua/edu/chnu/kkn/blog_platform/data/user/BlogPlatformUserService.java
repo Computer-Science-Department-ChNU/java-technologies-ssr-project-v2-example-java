@@ -23,16 +23,26 @@ public class BlogPlatformUserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public BlogPlatformUser signUp(BlogPlatformUserRequest blogPlatformUserRequest) {
+    public BlogPlatformUser signUpAuthor(BlogPlatformUserRequest blogPlatformUserRequest) {
+        var blogPlatformUser = blogPlatformUserRepository
+                .save(mapBlogPlatformUserRequestToEntity(blogPlatformUserRequest, Role.AUTHOR));
+        persistAuthor(blogPlatformUserRequest);
+        return blogPlatformUser;
+    }
+
+    public BlogPlatformUser signUpAdmin(BlogPlatformUserRequest blogPlatformUserRequest) {
+        return blogPlatformUserRepository.save(mapBlogPlatformUserRequestToEntity(blogPlatformUserRequest, Role.ADMIN));
+    }
+
+    private BlogPlatformUser mapBlogPlatformUserRequestToEntity(BlogPlatformUserRequest blogPlatformUserRequest,
+                                                                Role role) {
         var blogPlatformUser = new BlogPlatformUser();
         blogPlatformUser.setFirstName(blogPlatformUserRequest.firstName());
         blogPlatformUser.setLastName(blogPlatformUserRequest.lastName());
         blogPlatformUser.setUserName(blogPlatformUserRequest.userName());
         blogPlatformUser.setPassword(passwordEncoder.encode(blogPlatformUserRequest.password()));
-        blogPlatformUser.setRole(Role.AUTHOR.name());
-        var result = blogPlatformUserRepository.save(blogPlatformUser);
-        persistAuthor(blogPlatformUserRequest);
-        return result;
+        blogPlatformUser.setRole(role.name());
+        return blogPlatformUser;
     }
 
     private void persistAuthor(BlogPlatformUserRequest blogPlatformUserRequest) {
