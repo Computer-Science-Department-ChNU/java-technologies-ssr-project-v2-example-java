@@ -6,7 +6,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AppAuthenticationFacade implements AuthenticationFacade {
+public class AppAuthenticationInfoInfoFacade implements AuthenticationInfoFacade {
 
     @Override
     public boolean isAuthenticated() {
@@ -26,6 +26,15 @@ public class AppAuthenticationFacade implements AuthenticationFacade {
                     .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().contains(Role.ADMIN.name()));
         }
         return false;
+    }
+
+    @Override
+    public String getUsername() {
+        var auth = getAuthentication();
+        if(isNotAnonymousAuthentication(auth)) {
+            return auth.getName();
+        }
+        return "";
     }
 
     private Authentication getAuthentication() {

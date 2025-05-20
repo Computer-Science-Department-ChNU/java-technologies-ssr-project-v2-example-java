@@ -150,9 +150,353 @@
             .main-content {
                 padding: 20px 10px;
             }
-
             .content-card {
                 padding: 20px;
+            }
+        }
+        .resource-list {
+            margin: 0 auto;
+        }
+
+        .resource-item {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .resource-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .resource-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            padding: 20px 20px 10px 20px;
+        }
+
+        .resource-content {
+            padding: 0 20px 15px 20px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .resource-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            background-color: #f9f9f9;
+            border-top: 1px solid #eee;
+        }
+
+        .meta-info {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #777;
+        }
+
+        .author {
+            font-weight: 500;
+            color: #444;
+        }
+
+        .dot-separator {
+            margin: 0 8px;
+            font-size: 10px;
+            color: #ccc;
+        }
+
+        .date {
+            color: #888;
+        }
+
+        .meta-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .edit-button, .delete-button {
+            border: none;
+            border-radius: 4px;
+            padding: 6px 12px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .edit-button {
+            background-color: #f0f0f0;
+            color: #555;
+        }
+
+        .edit-button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .delete-button {
+            background-color: #fff0f0;
+            color: #e74c3c;
+        }
+
+        .delete-button:hover {
+            background-color: #ffe0e0;
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background-color: #4a6cf7;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(74, 108, 247, 0.3);
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+            border: none;
+            z-index: 10;
+        }
+
+        .floating-button:hover {
+            transform: translateY(-5px);
+            background-color: #3a5ce5;
+        }
+
+        .floating-button svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #777;
+        }
+
+        .empty-state svg {
+            width: 80px;
+            height: 80px;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .empty-title {
+            font-size: 20px;
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .empty-message {
+            margin-bottom: 20px;
+        }
+
+        .create-first-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #4a6cf7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .create-first-button:hover {
+            background-color: #3a5ce5;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 500px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            animation: modalOpen 0.3s ease-out;
+        }
+
+        @keyframes modalOpen {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            background-color: #4a6cf7;
+            color: white;
+            padding: 15px 20px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #4a6cf7;
+            outline: none;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .modal-footer {
+            padding: 15px 20px;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .modal-close {
+            background-color: #f0f0f0;
+            color: #555;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .modal-close:hover {
+            background-color: #e0e0e0;
+        }
+
+        .modal-save {
+            background-color: #4a6cf7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .modal-save:hover {
+            background-color: #3a5ce5;
+        }
+
+        .confirm-modal .modal-content {
+            max-width: 400px;
+        }
+
+        .confirm-modal .modal-header {
+            background-color: #e74c3c;
+        }
+
+        .confirm-modal .modal-body {
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .confirm-modal .modal-message {
+            margin-bottom: 20px;
+            color: #555;
+            font-size: 16px;
+        }
+
+        .confirm-cancel {
+            background-color: #f0f0f0;
+            color: #555;
+        }
+
+        .confirm-delete {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .confirm-delete:hover {
+            background-color: #c0392b;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 15px;
+            }
+
+            .page-title {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+            .floating-button {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
             }
         }
     </style>
