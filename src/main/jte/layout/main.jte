@@ -83,6 +83,7 @@
             flex: 1;
             padding: 30px 20px;
             max-width: 1200px;
+            height: max-content;
             margin: 0 auto;
             width: 100%;
         }
@@ -147,15 +148,13 @@
                 font-size: 14px;
             }
 
-            .main-content {
-                padding: 20px 10px;
-            }
             .content-card {
                 padding: 20px;
             }
         }
         .resource-list {
             margin: 0 auto;
+            width: 100%;
         }
 
         .resource-item {

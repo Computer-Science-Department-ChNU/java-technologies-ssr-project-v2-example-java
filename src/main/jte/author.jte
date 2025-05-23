@@ -47,26 +47,51 @@
 
 <!-- Create/Edit Resource Modal -->
 <div class="modal" id="resourceModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Create New Resource</h3>
+      </div>
+      <div class="modal-body">
+        <form id="resourceForm" action="/post/create" method="post">
+          <input type="hidden" id="resourceId">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" placeholder="Enter resource title" required>
+          </div>
+          <div class="form-group">
+            <label for="content">Content</label>
+            <textarea id="content" name="content" placeholder="Enter resource content" required></textarea>
+          </div>
+          <div class="modal-footer">
+            <button class="modal-close" onclick="closeModal()">Cancel</button>
+            <button class="modal-save" onclick="closeModal()" type="submit">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+</div>
+
+<div class="modal" id="editPostModal">
   <div class="modal-content">
     <div class="modal-header">
-      <h3 class="modal-title" id="modalTitle">Create New Resource</h3>
+      <h3 class="modal-title" id="modalTitle">Edit post</h3>
     </div>
     <div class="modal-body">
-      <form id="resourceForm">
-        <input type="hidden" id="resourceId">
+      <form id="resourceForm" action="/post/edit" method="post">
+        <input type="hidden" id="editId" name="id">
         <div class="form-group">
-          <label for="title">Title</label>
-          <input type="text" id="title" name="title" placeholder="Enter resource title" required>
+          <label for="editTitle">Title</label>
+          <input type="text" id="editTitle" name="title" placeholder="Enter resource title" required>
         </div>
         <div class="form-group">
-          <label for="content">Content</label>
-          <textarea id="content" name="content" placeholder="Enter resource content" required></textarea>
+          <label for="editContent">Content</label>
+          <textarea id="editContent" name="content" placeholder="Enter resource content" required></textarea>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-close" onclick="closeModal()">Cancel</button>
+          <button class="modal-save" onclick="closeModal()" type="submit">Save</button>
         </div>
       </form>
-    </div>
-    <div class="modal-footer">
-      <button class="modal-close" onclick="closeModal()">Cancel</button>
-      <button class="modal-save" onclick="saveResource()">Save</button>
     </div>
   </div>
 </div>
@@ -80,10 +105,13 @@
     <div class="modal-body">
       <p class="modal-message">Are you sure you want to delete this resource? This action cannot be undone.</p>
     </div>
-    <div class="modal-footer">
-      <button class="modal-close confirm-cancel" onclick="closeConfirmModal()">Cancel</button>
-      <button class="modal-save confirm-delete" onclick="confirmDelete()">Delete</button>
-    </div>
+    <form action="/post/delete" method="post">
+      <input type="hidden" id="deleteId" name="id">
+      <div class="modal-footer">
+        <button class="modal-close confirm-cancel" onclick="closeConfirmModal()">Cancel</button>
+        <button class="modal-save confirm-delete" onclick="closeConfirmModal()" type="submit">Delete</button>
+      </div>
+    </form>
   </div>
 </div>
 
@@ -119,33 +147,13 @@
     modal.classList.remove('show');
   }
 
-  function saveResource() {
-    const form = document.getElementById('resourceForm');
-    const titleInput = document.getElementById('title');
-    const contentInput = document.getElementById('content');
-
-    if (!titleInput.value || !contentInput.value) {
-      alert('Please fill all required fields');
-      return;
-    }
-
-    if (currentResourceId) {
-      // Update existing resource
-
-    } else {
-      // Create new resource
-
-    }
-
-    closeModal();
-  }
-
   // Delete functions
   let resourceToDelete = null;
 
   function deleteResource(resourceId) {
     resourceToDelete = resourceId;
     const confirmModal = document.getElementById('confirmModal');
+    document.getElementById('deleteId').value = resourceId;
     confirmModal.classList.add('show');
   }
 
@@ -155,27 +163,17 @@
     resourceToDelete = null;
   }
 
-  function confirmDelete() {
-    if (resourceToDelete !== null) {
-      // Remove the resource
-
-      closeConfirmModal();
-    }
-  }
-
-  function editResource(resourceId) {
-    const modal = document.getElementById('resourceModal');
-    const modalTitle = document.getElementById('modalTitle');
+  function editResource(resourceId, title, content) {
+    const modal = document.getElementById('editPostModal');
     const form = document.getElementById('resourceForm');
 
     // Reset form
     form.reset();
     currentResourceId = resourceId;
 
-    document.getElementById('resourceId').value = resourceId;
-    document.getElementById('title').value = 'Test';
-    document.getElementById('content').value = 'Test';
-    modalTitle.textContent = 'Edit Resource';
+    document.getElementById('editId').value = resourceId;
+    document.getElementById('editTitle').value = title;
+    document.getElementById('editContent').value = content;
 
     modal.classList.add('show');
   }
